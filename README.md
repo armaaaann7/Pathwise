@@ -6,7 +6,7 @@ Pathwise is an interactive pathfinding visualizer. It shows how classic graph al
 
 Built with **vanilla JavaScript and HTML Canvas**. No framework, no build step, no dependencies.
 
-**Live demo:** `https://armaaaann7.github.io/pathwise/` 
+   **Live demo:** https://armaaaann7.github.io/pathwise/
 
 ## Why this project
 
@@ -115,13 +115,6 @@ Requires Node 18 or newer. There are no dependencies to install. The tests cover
 - a randomized check on 2,000 boards: all algorithms agree on whether a path exists, paths are valid, A\* always matches Dijkstra's cost, nothing beats BFS on steps or Dijkstra on cost, and A\* never explores more cells than Dijkstra
 
 The same tests run automatically on GitHub for every push and pull request (`.github/workflows/test.yml`).
-
-## Deploy to GitHub Pages
-
-1. Push the repo to GitHub.
-2. Go to **Settings > Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**, select `main` and `/ (root)`, then save.
-4. After a minute the site is live at `https://armaaaann7.github.io/pathwise/`.
 
 ## Roadmap
 
