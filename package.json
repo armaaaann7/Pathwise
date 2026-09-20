@@ -1,0 +1,12 @@
+{
+  "name": "pathwise",
+  "version": "1.0.0",
+  "description": "Interactive visualizer for BFS, DFS, Dijkstra, A* and greedy best-first search. Vanilla JS + Canvas, no dependencies.",
+  "main": "js/algorithms.js",
+  "scripts": {
+    "test": "node --test",
+    "start": "npx --yes serve ."
+  },
+  "keywords": ["pathfinding", "algorithms", "visualization", "dijkstra", "a-star", "bfs", "dfs", "canvas"],
+  "license": "MIT"
+}

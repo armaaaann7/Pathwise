@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pathwise | Pathfinding Visualizer</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <svg width="44" height="44" viewBox="0 0 44 44" aria-hidden="true">
+      <rect width="44" height="44" rx="12" fill="var(--panel)" stroke="var(--border)"/>
+      <path d="M12 30 L12 18 L22 18 L22 27 L32 27 L32 15" fill="none" stroke="var(--path)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="12" cy="30" r="4" fill="var(--start)"/>
+      <circle cx="32" cy="15" r="4" fill="var(--end)"/>
+    </svg>
+    <div>
+      <h1>Pathwise</h1>
+      <p class="tagline">Get wise to how algorithms find the way. Watch BFS, DFS, Dijkstra, A* and greedy search explore the same maze.</p>
+    </div>
+  </header>
+
+  <div class="layout">
+    <section aria-label="Board and controls">
+      <div class="card">
+        <div class="toolbar">
+          <div class="group">
+            <label class="lbl" for="algo">Algorithm</label>
+            <select id="algo">
+              <option value="bfs">Breadth-First Search</option>
+              <option value="dfs">Depth-First Search</option>
+              <option value="dijkstra" selected>Dijkstra</option>
+              <option value="astar">A* Search</option>
+              <option value="greedy">Greedy Best-First</option>
+            </select>
+          </div>
+
+          <div class="group">
+            <span class="lbl">Run</span>
+            <div class="row">
+              <button class="btn primary" id="runBtn" type="button"></button>
+              <button class="btn" id="stepBtn" type="button">Step</button>
+              <button class="btn" id="resetBtn" type="button">Reset</button>
+            </div>
+          </div>
+
+          <div class="group">
+            <label class="lbl" for="speed">Speed</label>
+            <div class="speed">
+              <input type="range" id="speed" min="1" max="10" step="1" value="7">
+              <output id="speedOut" for="speed">Fast</output>
+            </div>
+          </div>
+
+          <div class="group">
+            <span class="lbl">Brush</span>
+            <div class="seg" role="group" aria-label="Brush type">
+              <button type="button" id="brushWall" aria-pressed="true"><span class="dot wall"></span>Wall</button>
+              <button type="button" id="brushMud" aria-pressed="false"><span class="dot mud"></span>Mud (cost 5)</button>
+            </div>
+          </div>
+
+          <div class="group">
+            <span class="lbl">Board</span>
+            <div class="row">
+              <button class="btn" id="mazeBtn" type="button">Maze</button>
+              <button class="btn" id="mudBtn" type="button">Scatter mud</button>
+              <button class="btn" id="clearBtn" type="button">Clear board</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="board-card">
+          <div class="board-wrap">
+            <canvas id="board" aria-label="Pathfinding grid. Drag to draw walls." role="img"></canvas>
+          </div>
+          <ul class="legend" aria-label="Legend">
+            <li><span class="sw start"></span>Start</li>
+            <li><span class="sw end"></span>Goal</li>
+            <li><span class="sw wall"></span>Wall</li>
+            <li><span class="sw mud"></span>Mud (cost 5)</li>
+            <li><span class="sw visited"></span>Explored (early to late)</li>
+            <li><span class="sw path"></span>Final path</li>
+          </ul>
+          <p class="hint">Drag on the grid to draw walls (drag over existing ones to erase). Drag the green and red markers to move them. Switch to Mud to paint cells that cost 5 to cross instead of 1.</p>
+        </div>
+      </div>
+    </section>
+
+    <aside aria-label="Results">
+      <section class="card">
+        <h2>Last run</h2>
+        <p class="status" id="status" role="status" aria-live="polite"></p>
+        <div class="tiles">
+          <div class="tile"><div class="v" id="sVisited">-</div><div class="k">Cells explored</div></div>
+          <div class="tile"><div class="v" id="sSteps">-</div><div class="k">Path steps</div></div>
+          <div class="tile"><div class="v" id="sCost">-</div><div class="k">Path cost</div></div>
+          <div class="tile"><div class="v" id="sTime">-</div><div class="k">Compute time</div></div>
+        </div>
+        <p class="note" id="note"></p>
+      </section>
+
+      <section class="card about" aria-live="off">
+        <h2>About this algorithm</h2>
+        <h3 id="aName"></h3>
+        <p id="aDesc"></p>
+        <dl class="facts">
+          <dt>Data structure</dt><dd id="aDs"></dd>
+          <dt>Time</dt><dd id="aTime"></dd>
+          <dt>Space</dt><dd id="aSpace"></dd>
+          <dt>Shortest path?</dt><dd id="aOpt"></dd>
+          <dt>Mud costs</dt><dd id="aMud"></dd>
+        </dl>
+        <p class="foot">V = number of cells, E = number of connections between them (about 4V on this grid).</p>
+      </section>
+
+      <section class="card">
+        <div class="hist-head">
+          <h2>Compare runs</h2>
+          <button class="link" id="histClear" type="button">Clear</button>
+        </div>
+        <div id="histBody"></div>
+      </section>
+    </aside>
+  </div>
+
+  <footer>
+    Shortcuts: <kbd>Space</kbd> run / pause &nbsp; <kbd>S</kbd> step &nbsp; <kbd>R</kbd> reset &nbsp; <kbd>W</kbd> switch brush &nbsp; <kbd>M</kbd> new maze
+  </footer>
+</div>
+
+<script src="js/algorithms.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
