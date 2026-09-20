@@ -126,4 +126,4 @@ The same tests run automatically on GitHub for every push and pull request (`.gi
 
 ## License
 
-MIT. See [LICENSE](LICENSE). R
+   MIT. See [LICENSE](LICENSE).
